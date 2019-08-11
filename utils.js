@@ -61,7 +61,7 @@ module.exports = {
         }
         verify = verify.data.message;
         if (verify.id !== msg.author.id) {
-            await this.blacklist('unauthorized access', `${msg.author.mention} tried to authenticate their account using <@${verify.id}>'s hash`, msg.author.id);
+            await this.blacklist('unauthorized access', `${msg.author.mention} tried to authenticate their account using <@${verify.id}>'s credentials`, msg.author.id);
             return Promise.reject(new Error('Credentials Incorrect'));
         }
         delete verify._id;
