@@ -1,0 +1,7 @@
+{
+    "bot": {
+        "token": "Your token here",
+        "options": {},
+        "commandOptions": {}
+    }
+}

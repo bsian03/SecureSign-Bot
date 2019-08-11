@@ -4,10 +4,15 @@
   "description": "A Discord bot for the SecureSign CLI",
   "main": "index.js",
   "dependencies": {
+    "axios": "^0.19.0",
     "eris": "^0.10.1",
-    "securesign.js": "^0.0.26"
+    "fs": "0.0.1-security"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb-base": "^13.2.0",
+    "eslint-plugin-import": "^2.18.2"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
