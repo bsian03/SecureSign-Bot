@@ -96,7 +96,9 @@ module.exports = {
             }
             console.log(users);
             users = users.split('\n').map(a => a.split(':'));
+            console.log(users);
             const foundUser = users.filter(e => e.includes(':')).find(u => u[4].split(',')[1] === id);
+            console.log(foundUser);
             if (!foundUser) return Promise.reject(new Error('No user found'));
             const obj = {
                 accountName: foundUser[0],
