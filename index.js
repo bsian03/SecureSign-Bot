@@ -11,7 +11,7 @@ let { bot } = require('./botConfig.json');
 const utils = require('./utils');
 
 bot.commandOptions.defaultCommandOptions.cooldownMessage = async (message) => {
-    const msg = await message.channel.createMessage(`${message.member.mention} You're using commands too quickly! Slow down.`);
+    const msg = await message.channel.createMessage(`${message.author.mention} You're using commands too quickly! Slow down.`);
     setTimeout(() => {
         msg.delete();
     }, 5000);
