@@ -1,7 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-useless-return */
 /* eslint-disable max-len */
-/* eslint-disable no-console */
 /* eslint-disable global-require */
 /* eslint-disable class-methods-use-this */
 /* eslint-disable no-useless-constructor */
@@ -94,11 +93,8 @@ module.exports = {
                 this.err(error.stack);
                 return Promise.reject(new Error('An unknown error occured'));
             }
-            console.log(users);
             users = users.split('\n').map(a => a.split(':'));
-            console.log(users);
             const foundUser = users.find(u => u[4].split(',')[1] === id);
-            console.log(foundUser);
             if (!foundUser) return Promise.reject(new Error('No user found'));
             const obj = {
                 accountName: foundUser[0],

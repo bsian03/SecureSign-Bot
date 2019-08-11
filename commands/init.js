@@ -2,7 +2,6 @@
 /* eslint-disable no-inner-declarations */
 /* eslint-disable eqeqeq */
 /* eslint-disable prefer-destructuring */
-/* eslint-disable no-console */
 /* eslint-disable global-require */
 /* eslint-disable max-len */
 /* eslint-disable no-useless-return */
@@ -35,7 +34,6 @@ module.exports = () => {
                 initing.push(msg.author.id);
                 let isActive = true;
                 async function timeout(question, choices = null) {
-                    console.log(question);
                     if (!isActive) return;
                     const timeoutPromise = new Promise(async (resolve, reject) => {
                         await msg.channel.createMessage(question);
@@ -43,7 +41,6 @@ module.exports = () => {
                             if (mesg.author.bot || mesg.channel.type !== 1 || msg.author.id !== mesg.author.id || !mess) return;
                             // eslint-disable-next-line no-unused-expressions
                             const verif = choices ? choices.includes(mesg.content) : mesg.content;
-                            console.log(choices);
                             if (verif) {
                                 // eslint-disable-next-line no-param-reassign
                                 mess = undefined;
@@ -112,7 +109,6 @@ module.exports = () => {
             }
             hash = undefined;
             initing = initing.filter(u => u !== msg.author.id);
-            console.log(initInfo);
             message.edit({
                 content: '',
                 embed: {
