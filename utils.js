@@ -94,6 +94,7 @@ module.exports = {
                 this.err(error.stack);
                 return Promise.reject(new Error('An unknown error occured'));
             }
+            console.log(users);
             users = users.split('\n').map(a => a.split(':'));
             const foundUser = users.filter(e => e.includes(':')).find(u => u[4].split(',')[1] === id);
             if (!foundUser) return Promise.reject(new Error('No user found'));
