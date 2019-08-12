@@ -127,7 +127,7 @@ module.exports = {
     search(search, msg) {
         const guild = client.guilds.get('446067825673633794');
         let member = guild.members.find(user => `${user.username}#${user.discriminator}` === search || user.username === search || user.id === search || (msg.mentions[0] && user.id === msg.mentions[0].id) || (user.nick !== undefined && user.nick === search));
-        if (!member) guild.members.find(user => `${user.username.toLowerCase()}#${user.discriminator}` === search.toLowerCase() || user.username.toLowerCase() === search.toLowerCase() || (user.nick !== undefined && user.nick.toLowerCase()) === search.toLowerCase());
+        if (!member) guild.members.find(user => `${user.username.toLowerCase()}#${user.discriminator}` === search.toLowerCase() || user.username.toLowerCase() === search.toLowerCase() || (user.nick !== undefined && user.nick.toLowerCase() === search.toLowerCase()));
         if (!member) member = guild.members.find(user => user.username.toLowerCase().includes(search.toLowerCase()) || (user.nick !== undefined && user.nick.toLowerCase().includes(search.toLowerCase())));
         if (member) return member;
         if (msg) msg.channel.createMessage(this.emojis.error(`I could not find ${search}`));
