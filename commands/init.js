@@ -95,6 +95,7 @@ module.exports = () => {
                         hash = await utils.getSecureSignHash(username, password);
                     } catch (error) {
                         isActive = false;
+                        initing = initing.filter(u => u !== msg.author.id);
                         return message.edit(`<:error:477698393754304513> ${error.message}`);
                     }
                     username = undefined; password = undefined;
@@ -105,7 +106,8 @@ module.exports = () => {
             try {
                 initInfo = await utils.init(hash, msg);
             } catch (error) {
-                message.edit(`<:error:477698393754304513> ${error.message}`);
+                initing = initing.filter(u => u !== msg.author.id);
+                return message.edit(`<:error:477698393754304513> ${error.message}`);
             }
             hash = undefined;
             initing = initing.filter(u => u !== msg.author.id);
@@ -130,6 +132,7 @@ module.exports = () => {
                 },
             });
         } catch (error) {
+            initing = initing.filter(u => u !== msg.author.id);
             msg.channel.createMessage('<:error:477698393754304513> An unknown error occured');
             utils.err(error.stack);
         }
