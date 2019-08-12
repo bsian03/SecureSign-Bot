@@ -17,13 +17,6 @@ bot.commandOptions.defaultCommandOptions.cooldownMessage = async (message) => {
     }, 5000);
 };
 const client = new CommandClient(bot.token, bot.options, bot.commandOptions);
-async function connect() {
-    await client.connect();
-    client.on('ready', async () => {
-        console.log(`Logged on as ${utils.tag}`);
-    });
-}
-connect();
 module.exports = client;
 
 
@@ -34,3 +27,7 @@ for (const cmdFile of __cmddir) {
     // eslint-disable-next-line import/no-dynamic-require
     require(command)();
 }
+client.on('ready', async () => {
+    console.log(`Logged on as ${utils.tag}`);
+});
+client.connect();
