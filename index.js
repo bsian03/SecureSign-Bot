@@ -8,7 +8,6 @@
 const { CommandClient } = require('eris');
 const fs = require('fs');
 let { bot } = require('./botConfig.json');
-const utils = require('./utils');
 
 bot.commandOptions.defaultCommandOptions.cooldownMessage = async (message) => {
     const msg = await message.channel.createMessage(`${message.author.mention} You're using commands too quickly! Slow down.`);
@@ -17,11 +16,9 @@ bot.commandOptions.defaultCommandOptions.cooldownMessage = async (message) => {
     }, 5000);
 };
 const client = new CommandClient(bot.token, bot.options, bot.commandOptions);
-async function connect() {
-    await client.connect();
-    console.log(client);
-}
-connect();
+module.exports = client;
+
+const utils = require('./utils');
 
 const __cmddir = fs.readdirSync(`${__dirname}/commands`);
 for (const cmdFile of __cmddir) {
@@ -30,5 +27,7 @@ for (const cmdFile of __cmddir) {
     // eslint-disable-next-line import/no-dynamic-require
     require(command)();
 }
-
-module.exports = client;
+client.on('ready', async () => {
+    console.log(`Logged on as ${utils.tag}`);
+});
+client.connect();
