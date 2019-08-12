@@ -13,6 +13,7 @@ module.exports = () => {
     let initing = [];
     client.registerCommand('init', async (msg, args) => {
         try {
+            if (initing.includes(msg.author.id)) return;
             const userConfig = require('../userCache');
             // eslint-disable-next-line prefer-const
             if (userConfig.blacklists.includes(msg.author.id)) return;
