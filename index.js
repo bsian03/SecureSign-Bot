@@ -17,7 +17,6 @@ bot.commandOptions.defaultCommandOptions.cooldownMessage = async (message) => {
 };
 const client = new CommandClient(bot.token, bot.options, bot.commandOptions);
 module.exports = client;
-const utils = require('./utils');
 
 client.on('ready', async () => {
     console.log(client);
