@@ -12,22 +12,34 @@ const utils = require('../utils');
 module.exports = () => {
     let initing = [];
     client.registerCommand('init', async (msg, args) => {
+        console.log('Command recieved');
         try {
+            console.log('Inside try block. Getting user cache');
             const userConfig = require('../userCache');
+            console.log('Cache fetched');
             // eslint-disable-next-line prefer-const
             if (msg.channel.type !== 1) {
+                console.log('Message not in DMs');
                 if (args[0]) msg.delete();
+                console.log('Creating message');
                 msg.channel.createMessage('Run this command in your DMs!');
+                console.log('Created message');
                 return;
             }
+            console.log('Setting message');
             let msgShown = 'Initializing SecureSign Account';
             if (userConfig.accounts[msg.author.id]) msgShown = 'Updating SecureSign Account';
+            console.log('Message set');
             let hash;
             let message;
             if (args[0]) {
+                console.log('Argument supplied, pushing init status');
                 initing.push(msg.author.id);
+                console.log('Init status pushed');
                 hash = args[0];
+                console.log('Hash set, sending message');
                 message = await msg.channel.createMessage(msgShown);
+                console.log('Message sent');
             } else {
                 initing.push(msg.author.id);
                 let isActive = true;
