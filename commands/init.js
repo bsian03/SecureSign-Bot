@@ -15,7 +15,6 @@ module.exports = () => {
         try {
             const userConfig = require('../userCache');
             // eslint-disable-next-line prefer-const
-            if (userConfig.blacklists.includes(msg.author.id)) return;
             if (msg.channel.type !== 1) {
                 if (args[0]) msg.delete();
                 msg.channel.createMessage('Run this command in your DMs!');
