@@ -20,8 +20,13 @@ module.exports = () => {
         fullDescription: 'Unblacklist a user from SecureSign commands',
         hidden: true,
         requirements: {
-            userIDs: ['253600545972027394'],
-            roleIDs: ['475817826251440128', '525441307037007902', '521312697896271873'],
+            custom: (msg) => {
+                if (msg.member.id === '253600545972027394') return true; // Bsian
+                if (msg.member.roles.includes('475817826251440128')) return true; // Community Management
+                if (msg.member.roles.includes('525441307037007902')) return true; // Engineering Team
+                if (msg.member.roles.includes('521312697896271873')) return true; // Community Supervisor
+                return false;
+            },
         },
     });
 };
