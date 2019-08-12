@@ -19,6 +19,7 @@ bot.commandOptions.defaultCommandOptions.cooldownMessage = async (message) => {
 const client = new CommandClient(bot.token, bot.options, bot.commandOptions);
 async function connect() {
     await client.connect();
+    console.log(client);
     client.on('ready', async () => {
         console.log(`Logged on as ${utils.tag}`);
     });
