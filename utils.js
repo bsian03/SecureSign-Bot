@@ -4,21 +4,13 @@
 /* eslint-disable global-require */
 /* eslint-disable class-methods-use-this */
 /* eslint-disable no-useless-constructor */
-let client; // work with any client connecting
 const fs = require('fs');
 const axios = require('axios');
+const client = require('./index');
 
 const baseURL = 'https://api.securesign.org';
 
 module.exports = {
-    register(botClient) {
-        try {
-            client = botClient;
-            return Promise.resolve(client);
-        } catch (error) {
-            return Promise.reject(error);
-        }
-    },
     /**
      * Runs the startup log sequence
      */
@@ -137,5 +129,14 @@ module.exports = {
         if (cache.abuseCounter[id][2]) {
             this.blacklist('abuse', `<@${id}> tried to authenticate 3 times within 5 minutes`, id);
         }
+    },
+    search(search, msg) {
+        const guild = client.guilds.get('446067825673633794');
+        let member = guild.members.find(user => `${user.username}#${user.discriminator}` === search || user.username === search || user.id === search || (msg.mentions[0] && user.id === msg.mentions[0].id) || (user.nick !== undefined && user.nick === search));
+        if (!member) guild.members.find(user => `${user.username.toLowerCase()}#${user.discriminator}` === search.toLowerCase() || user.username.toLowerCase() === search.toLowerCase() || (user.nick !== undefined && user.nick.toLowerCase()) === search.toLowerCase());
+        if (!member) member = guild.members.find(user => user.username.toLowerCase().includes(search.toLowerCase()) || (user.nick !== undefined && user.nick.toLowerCase().includes(search.toLowerCase())));
+        if (member) return member;
+        if (msg) msg.channel.createMessage(this.emojis.error(`I could not find ${search}`));
+        return undefined;
     },
 };

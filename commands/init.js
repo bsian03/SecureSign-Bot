@@ -54,7 +54,7 @@ module.exports = () => {
                         setTimeout(() => {
                             mess = undefined;
                             return reject(new Error('Request cancelled due to inactivity'));
-                        }, 10000);
+                        }, 600000);
                         if (!mess) return;
                         return;
                     });

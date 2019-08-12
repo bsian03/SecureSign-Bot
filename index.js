@@ -28,7 +28,6 @@ for (const cmdFile of __cmddir) {
     require(command)();
 }
 client.on('ready', async () => {
-    await utils.register(client);
     console.log(`Logged on as ${utils.tag}`);
 });
 client.connect();

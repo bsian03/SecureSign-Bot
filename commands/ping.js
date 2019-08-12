@@ -1,5 +1,5 @@
-/* eslint-disable no-console */
 const client = require('../index');
+const utils = require('../utils');
 
 module.exports = () => {
     client.registerCommand('ping', async (msg) => {
@@ -8,7 +8,7 @@ module.exports = () => {
             const message = await msg.channel.createMessage('Pong!');
             message.edit(`Pong! \`${Date.now() - start}ms\``);
         } catch (error) {
-            console.error(error.stack);
+            utils.err(error.stack);
         }
     }, {
         dmOnly: false,
