@@ -20,7 +20,7 @@ module.exports = client;
 const utils = require('./utils');
 
 client.on('ready', async () => {
-    console.log(`Logged on as ${utils.tag}`);
+    console.log(client);
 });
 
 const __cmddir = fs.readdirSync(`${__dirname}/commands`);
