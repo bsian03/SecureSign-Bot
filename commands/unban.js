@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 /* eslint-disable global-require */
 const client = require('../index');
 const utils = require('../utils');
@@ -9,6 +10,7 @@ module.exports = () => {
             // eslint-disable-next-line prefer-const
             let cache = require('../userCache');
             const member = utils.search(args.join(' '), msg);
+            if (!member) return;
             if (!cache.blacklists.includes(member.id)) return msg.channel.createMessage(`⚠ ${member.username}#${member.discriminator} is not blacklisted`);
             cache.blacklists = cache.blacklists.filter(u => u !== member.id);
             return msg.channel.createMessage(`${member.username}#${member.discriminator} is no longer blacklisted`);
