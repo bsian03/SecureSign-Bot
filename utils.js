@@ -14,7 +14,6 @@ module.exports = {
     /**
      * Runs the startup log sequence
      */
-    tag: `${client.user.username}#${client.user.discriminator}`,
     async blacklist(reason, message, id) {
         const userConfig = require('./userConfig.json');
         const pings = require('./pings.json').map(u => `<@${u}>`).join(' ');
