@@ -17,8 +17,13 @@ bot.commandOptions.defaultCommandOptions.cooldownMessage = async (message) => {
     }, 5000);
 };
 const client = new CommandClient(bot.token, bot.options, bot.commandOptions);
-module.exports = client;
-
+async function connect() {
+    await client.connect();
+    client.on('ready', async () => {
+        console.log(`Logged on as ${utils.tag}`);
+    });
+}
+connect();
 
 const __cmddir = fs.readdirSync(`${__dirname}/commands`);
 for (const cmdFile of __cmddir) {
@@ -27,7 +32,5 @@ for (const cmdFile of __cmddir) {
     // eslint-disable-next-line import/no-dynamic-require
     require(command)();
 }
-client.on('ready', async () => {
-    console.log(`Logged on as ${utils.tag}`);
-});
-client.connect();
+
+module.exports = client;
