@@ -105,7 +105,7 @@ module.exports = () => {
             try {
                 initInfo = await utils.init(hash, msg);
             } catch (error) {
-                return message.edit(`<:error:477698393754304513> ${error.message}`);
+                message.edit(`<:error:477698393754304513> ${error.message}`);
             }
             hash = undefined;
             initing = initing.filter(u => u !== msg.author.id);
