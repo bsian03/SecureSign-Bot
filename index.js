@@ -19,7 +19,7 @@ const client = new CommandClient(bot.token, bot.options, bot.commandOptions);
 module.exports = client;
 
 client.on('ready', async () => {
-    console.log(client);
+    console.log(`Logged in as ${client.user.username}#${client.user.discriminator}`);
 });
 
 const __cmddir = fs.readdirSync(`${__dirname}/commands`);

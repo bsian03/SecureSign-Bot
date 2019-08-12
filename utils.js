@@ -11,9 +11,6 @@ const client = require('./index');
 const baseURL = 'https://api.securesign.org';
 
 module.exports = {
-    /**
-     * Runs the startup log sequence
-     */
     async blacklist(reason, message, id) {
         const userConfig = require('./userConfig.json');
         const pings = require('./pings.json').map(u => `<@${u}>`).join(' ');

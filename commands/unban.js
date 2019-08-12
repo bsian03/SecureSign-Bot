@@ -3,7 +3,8 @@ const client = require('../index');
 const utils = require('../utils');
 
 module.exports = () => {
-    const cmd = client.registerCommand('unban', async (msg, args) => {
+    client.registerCommand('unban', async (msg, args) => {
+        console.log('Command recieved');
         try {
             // eslint-disable-next-line prefer-const
             let cache = require('../userCache');
@@ -29,5 +30,4 @@ module.exports = () => {
             },
         },
     });
-    console.log(cmd);
 };
