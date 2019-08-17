@@ -5,7 +5,6 @@ const utils = require('../utils');
 
 module.exports = () => {
     client.registerCommand('unban', async (msg, args) => {
-        console.log('Command recieved');
         try {
             // eslint-disable-next-line prefer-const
             let cache = require('../userCache');
