@@ -137,4 +137,31 @@ module.exports = {
         if (msg) msg.channel.createMessage(`I could not find ${search}`);
         return undefined;
     },
+    split(output, length) {
+        const msgArray = [];
+        if (!output) {
+            return [];
+        }
+        if (Array.isArray(output)) {
+            // eslint-disable-next-line no-param-reassign
+            output = output.join('\n');
+        }
+        if (output.length > length) {
+            let str = '';
+            let pos;
+            while (output.length > 0) {
+                pos = output.length > length ? output.lastIndexOf('\n', length) : output.length;
+                if (pos > length) {
+                    pos = length;
+                }
+                str = output.substr(0, pos);
+                // eslint-disable-next-line no-param-reassign
+                output = output.substr(pos);
+                msgArray.push(str);
+            }
+        } else {
+            msgArray.push(output);
+        }
+        return msgArray;
+    },
 };
