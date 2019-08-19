@@ -10,8 +10,8 @@ module.exports = () => {
             const userConfig = require('../userCache');
             if (userConfig.blacklists.includes(msg.author.id)) return;
             const { roles } = client.guilds.get('446067825673633794').members.get(msg.author.id);
-            if (msg.channel.type !== 1 && (!roles.includes('475817826251440128') || !roles.includes('525441307037007902') || !roles.includes('521312697896271873') || !roles.includes('528728911668969472'))) return msg.channel.createMessage('Please run this command in your DMs. Roles');
-            if (!args[0] && msg.channel.type !== 1) return msg.channel.createMessage('Please run this command in your DMs. Args');
+            if (msg.channel.type !== 1 && !(roles.includes('475817826251440128') || roles.includes('525441307037007902') || roles.includes('521312697896271873') || roles.includes('528728911668969472'))) return msg.channel.createMessage('Please run this command in your DMs');
+            if (!args[0] && msg.channel.type !== 1) return msg.channel.createMessage('Please run this command in your DMs');
             let id;
             let hash;
             if (msg.channel.type === 1) id = msg.author.id;
