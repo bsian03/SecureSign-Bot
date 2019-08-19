@@ -187,10 +187,12 @@ module.exports = {
                 return Promise.reject(new Error('An unknown error occured'));
             }
             acct = acct.data.message;
-            if (acct.data.message.id !== id && (!roles.includes('475817826251440128') || !roles.includes('525441307037007902') || !roles.includes('521312697896271873') || !roles.includes('528728911668969472'))) {
+            if (acct.id !== id && (!roles.includes('475817826251440128') || !roles.includes('525441307037007902') || !roles.includes('521312697896271873') || !roles.includes('528728911668969472'))) {
                 await this.blacklist('unauthorized access', `<@!${id}> tried to view <@${acct.id}>'s account details`, id);
                 return Promise.reject(new Error('Account not found'));
             }
+            delete acct._id;
+            delete acct.password;
             userConfig.accounts[id] = acct;
             try {
                 userConfig.accounts[id].vmAccount = await this.findVMAccount(id);
