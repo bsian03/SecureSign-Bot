@@ -16,7 +16,7 @@ module.exports = () => {
             let hash;
             if (msg.channel.type === 1) id = msg.author.id;
             else {
-                const user = utils.membersearch(args.join(' '));
+                const user = utils.membersearch(args.join(' '), msg);
                 if (!user) hash = args[1];
                 else {
                     id = user.id;
@@ -66,7 +66,7 @@ module.exports = () => {
             });
         } catch (error) {
             utils.err(error.stack);
-            return msg.channel.createMessage('An unknown error occured');
+            return msg.channel.createMessage('<:error:477698393754304513> An unknown error occured');
         }
     }, {
         cooldown: 30000,

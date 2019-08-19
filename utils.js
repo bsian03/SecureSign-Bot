@@ -211,7 +211,6 @@ module.exports = {
         if (!member) guild.members.find(user => `${user.username.toLowerCase()}#${user.discriminator}` === search.toLowerCase() || user.username.toLowerCase() === search.toLowerCase() || (user.nick !== undefined && user.nick.toLowerCase() === search.toLowerCase()));
         if (!member) member = guild.members.find(user => user.username.toLowerCase().includes(search.toLowerCase()) || (user.nick !== undefined && user.nick.toLowerCase().includes(search.toLowerCase())));
         if (member) return member;
-        if (msg) msg.channel.createMessage("<:error:477698393754304513> Couldn't find user");
         return undefined;
     },
 };
