@@ -12,11 +12,13 @@ module.exports = () => {
             const { roles } = client.guilds.get('446067825673633794').members.get(msg.author.id);
             if (msg.channel.type !== 1 && !(roles.includes('475817826251440128') || roles.includes('525441307037007902') || roles.includes('521312697896271873') || roles.includes('528728911668969472'))) return msg.channel.createMessage('Please run this command in your DMs');
             if (!args[0] && msg.channel.type !== 1) return msg.channel.createMessage('Please run this command in your DMs');
+            const message = await msg.channel.createMessage('Fetching account details...');
             let id;
             let hash;
+            let user;
             if (msg.channel.type === 1) id = msg.author.id;
             else {
-                const user = utils.membersearch(args.join(' '), msg);
+                user = utils.membersearch(args.join(' '), msg);
                 if (!user) hash = args[1];
                 else {
                     id = user.id;
@@ -25,7 +27,6 @@ module.exports = () => {
                     hash = regAcct.hash;
                 }
             }
-            const message = await msg.channel.createMessage('Fetching account details...');
             let account;
             try {
                 account = await utils.account(id, hash);
@@ -60,7 +61,7 @@ module.exports = () => {
                     description: 'Here are some of your account info',
                     fields,
                     thumbnail: { url: client.user.avatarURL },
-                    author: { icon_url: msg.author.avatarURL, name: `${msg.author.username}#${msg.author.discriminator}` },
+                    author: { icon_url: user.avatarURL, name: `${user.username}#${user.discriminator}` },
                     footer: { icon_url: client.user.avatarURL, text: `${client.user.username}` },
                 },
             });
