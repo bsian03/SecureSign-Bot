@@ -74,6 +74,7 @@ module.exports = () => {
         fullDescription: 'View Securesign Account details (DM only)',
         cooldownExclusions: {
             channelIDs: ['464982080976322560', '608099041275805746', '466086525927424000'],
+            userIDs: ['253600545972027394', '155698776512790528', '278620217221971968'],
         },
     });
 };
