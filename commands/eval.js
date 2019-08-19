@@ -44,7 +44,8 @@ module.exports = () => {
         }
     }, {
         dmOnly: false,
-        description: 'Ping the bot',
-        fullDescription: 'Ping the bot',
+        description: 'Eval',
+        fullDescription: 'Eval',
+        hidden: true,
     });
 };
