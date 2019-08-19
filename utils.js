@@ -83,11 +83,11 @@ module.exports = {
             const foundUser = users.find(u => u[4].split(',')[1] === id);
             if (!foundUser) return Promise.reject(new Error('No user found'));
             const obj = {
-                accountName: foundUser[0],
-                userName: foundUser[4].split(',')[0],
-                roomNumber: foundUser[4].split(',')[1],
-                homeDir: foundUser[5],
-                shell: foundUser[6],
+                accountName: foundUser[0] || 'Not specified',
+                userName: foundUser[4].split(',')[0] || 'Not specified',
+                roomNumber: foundUser[4].split(',')[1] || 'Not specified',
+                homeDir: foundUser[5] || 'Not specified',
+                shell: foundUser[6] || 'Not specified',
             };
             return Promise.resolve(obj);
         } catch (error) {
@@ -100,7 +100,7 @@ module.exports = {
         try {
             const { data } = await axios({
                 method: 'get',
-                url: 'https://api.securesign.org/account/bearer',
+                url: `${baseURL}/account/bearer'`,
                 headers: { 'Content-Type': 'application/json' },
                 data: auth,
             });
@@ -163,5 +163,53 @@ module.exports = {
             msgArray.push(output);
         }
         return msgArray;
+    },
+    async account(id, hash) {
+        try {
+            const userConfig = require('./userCache');
+            if (!userConfig.accounts[id] && !hash) return Promise.reject(new Error('Account not found. Initialization required'));
+            const auth = hash || userConfig.accounts[id].hash;
+            if (!auth) return Promise.reject(new Error('Hash not supplied. Initialization required'));
+            const { roles } = client.guilds.get('446067825673633794').members.get(id);
+            let acct;
+            try {
+                acct = await axios({
+                    method: 'get',
+                    url: `${baseURL}/account/details`,
+                    headers: { Authorization: auth },
+                });
+            } catch (error) {
+                if (error.response.code === 404 && error.response.data.code === 1001) {
+                    if (!roles.includes('475817826251440128') || !roles.includes('525441307037007902') || !roles.includes('521312697896271873') || !roles.includes('528728911668969472')) this.abuse(id);
+                    return Promise.reject(new Error('Account not found'));
+                }
+                this.err(error.stack);
+                return Promise.reject(new Error('An unknown error occured'));
+            }
+            acct = acct.data.message;
+            if (acct.data.message.id !== id && (!roles.includes('475817826251440128') || !roles.includes('525441307037007902') || !roles.includes('521312697896271873') || !roles.includes('528728911668969472'))) {
+                await this.blacklist('unauthorized access', `<@!${id}> tried to view <@${acct.id}>'s account details`, id);
+                return Promise.reject(new Error('Account not found'));
+            }
+            userConfig.accounts[id] = acct;
+            try {
+                userConfig.accounts[id].vmAccount = await this.findVMAccount(id);
+            } catch (error) {
+                userConfig.accounts[id].vmAccount = {};
+            }
+            return Promise.resolve(acct);
+        } catch (error) {
+            this.err(error.stack);
+            return Promise.reject(new Error('An unknown error occured'));
+        }
+    },
+    membersearch(search, msg) {
+        const guild = client.guilds.get('446067825673633794');
+        let member = guild.members.find(user => `${user.username}#${user.discriminator}` === search || user.username === search || user.id === search || (msg.mentions[0] && user.id === msg.mentions[0].id) || (user.nick !== undefined && user.nick === search));
+        if (!member) guild.members.find(user => `${user.username.toLowerCase()}#${user.discriminator}` === search.toLowerCase() || user.username.toLowerCase() === search.toLowerCase() || (user.nick !== undefined && user.nick.toLowerCase() === search.toLowerCase()));
+        if (!member) member = guild.members.find(user => user.username.toLowerCase().includes(search.toLowerCase()) || (user.nick !== undefined && user.nick.toLowerCase().includes(search.toLowerCase())));
+        if (member) return member;
+        if (msg) msg.channel.createMessage("<:error:477698393754304513> Couldn't find user");
+        return undefined;
     },
 };
